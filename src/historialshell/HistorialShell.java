@@ -35,16 +35,15 @@ public class HistorialShell {
                 case 2:
                     Operaciones.procurarUnComando(sc);
                     break;
-                /*case 3:
-                    Operaciones.procurarComandos();
+                case 3:
+                    Operaciones.procurarTodosComandos(sc);
                     break;
                 case 4:
-                    Operaciones.ultimosMovimientos();
+                    Operaciones.baleirarHistorico(sc);
                     break;
                 case 5:
-                    Operaciones.ultimosMovimientos();
+                    Operaciones.consultarHistorico(sc);
                     break;
-                 */
                 case 6:
                     System.out.println("SALIENDO...");
                     break;

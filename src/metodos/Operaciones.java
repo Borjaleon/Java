@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 public class Operaciones {
 
-    public static final String[] comandosValidos = {"cat", "cd", "cp", "dir", "date",
-        "del", "find", "grep", "help", "ls", "man", "mv", "rm"};
+    public static final String[] comandosValidos = {"cat", "cd", "cp",
+        "dir", "date", "del", "find", "grep", "help", "ls", "man", "mv", "rm"};
 
     public static void engadirComando(Scanner sc) {
 
@@ -36,75 +36,10 @@ public class Operaciones {
 
     }
 
-    /*public static void procurarComando(Scanner sc) {
-        String[] mensajes = new String[13];
-        int puntero2 = 0;
-        String aux;
-        int posicion = 0;
-
-        // Comprobamos que haya algo guardado 
-        if (puntero != 0) {
-            System.out.println("Introduce el comando que desea buscar");
-            String busqueda = sc.next();
-
-            // Recorremos el array
-            for (int i = 0; i < puntero; i++) {
-
-                // Comprobamos que la busqueda coincida
-                if (comandos[i].startsWith(busqueda)) {
-                    aux = comandos[i]; // Guardamos las coincidencias
-                    posicion = i; // Guardamos la posicion en la que se encontro
-
-                    // Recorre el array desde la posicion en la que estamos hasta el final
-                    for (int j = i; j < puntero; j++) {
-
-                        // En caso de que haya varias coincidencias nos quedamos solo con la ultima
-                        if (comandos[j].equals(aux) && j > posicion) {
-                            posicion = j;
-                        }
-
-                    }
-
-                    // Guardamos el contenido del array en la posicion en la que me encuentro
-                    // y la ultima posicion en la que lo encontro
-                    mensajes[puntero2] = "Encontrado el comando " + aux
-                            + " en la posicion " + (posicion + 1);
-                    puntero2++;
-                }
-            }
-
-            // Eliminamos los mensajes duplicados
-            String filtro;
-            for (int i = 0; i < puntero2; i++) {
-                filtro = mensajes[i]; // Se guarda cada mensaje del array
-
-                // Recorre el array desde i + 1 hasta el final
-                for (int j = i + 1; j < puntero2; j++) {
-                    // Evita que entre en las casillas vacias
-                    if (mensajes[j] != null) {
-                        // Elimina los mensajes duplicados
-                        if (filtro.equals(mensajes[j])) {
-                            mensajes[j] = null;
-                        }
-                    }
-                }
-            }
-
-            // Recorre el array y muestra los mensajes
-            for (String mensaje : mensajes) {
-                if (mensaje != null) { // Evita que entre en las casillas vacias
-                    System.out.println(mensaje);
-                }
-            }
-        } else {
-            System.out.println("Todavia no se ha introducido ningun comando");
-        }
-    }*/
     public static void procurarUnComando(Scanner sc) {
 
-        String aux;
-        int puntero2 = 0;
-        
+        String aux = null;
+
         // Comprobamos que haya algo guardado 
         if (puntero != 0) {
             System.out.println("Introduce el comando que desea buscar");
@@ -112,20 +47,89 @@ public class Operaciones {
 
             // Recorremos el array
             for (int i = 0; i < puntero; i++) {
-                
+
                 // Comprobamos que la busqueda coincida
                 if (comandos[i].startsWith(busqueda)) {
                     aux = comandos[i]; // Guardamos las coincidencias 
-                    puntero2 ++;
-                    System.out.println("El comando buscado es: " + aux);
                 }
-                
-            } 
-            
-            
+
+            }
+            System.out.println("El comando buscado es: " + aux);
         } else {
             System.out.println("No hay ningun comando guardado");
         }
-        
+
+    }
+
+    public static void procurarTodosComandos(Scanner sc) {
+
+        String[] aux = new String[100];
+        int puntero2 = 0;
+
+        // Comprobamos que haya algo guardado 
+        if (puntero != 0) {
+            System.out.println("Introduce el comando que desea buscar");
+            String busqueda = sc.next();
+
+            // Recorremos el array
+            for (int i = 0; i < puntero; i++) {
+
+                // Comprobamos que la busqueda coincida
+                if (comandos[i].startsWith(busqueda)) {
+                    aux[puntero2] = comandos[i]; // Guardamos las coincidencias
+                    puntero2++;
+                }
+
+            }
+
+            System.out.println("Las coincidencias son:");
+
+            for (int i = (puntero2 - 1); i >= 0; i--) {
+                System.out.println("\t" + i + " -> " + aux[i]);
+            }
+
+        } else {
+            System.out.println("No hay ningun comando guardado");
+        }
+
+    }
+
+    public static void baleirarHistorico(Scanner sc) {
+
+        if (puntero != 0) {
+            for (int i = 0; i <= puntero; i++) {
+                comandos[i] = null;
+            }
+        } else {
+            System.out.println("El historico ya esta vacio");
+        }
+        puntero = 0;
+    }
+
+    public static void consultarHistorico(Scanner sc) {
+        int recientes = 0;
+        String[] historico = new String[100];
+        int puntero3 = 0;
+
+        if (puntero != 0) {
+            System.out.println("Introduce el numero de "
+                    + "comandos recientes para mostrar");
+            recientes = sc.nextInt();
+            for (int i = (puntero - 1); i >= 0; i--) {
+                historico[puntero3] = comandos[i];
+                puntero3++;
+            }
+            System.out.println("Sus ultimos " + recientes + " comandos son: ");
+
+            if (recientes < puntero + 1) {
+                for (int i = 0; i < recientes; i++) {
+                    System.out.println("\t" + i + " -> " + historico[i]);
+                }
+            }else{
+                System.out.println("No tiene tantos comandos para mostrar");
+            }
+        } else {
+            System.out.println("El historico esta vacio");
+        }
     }
 }
